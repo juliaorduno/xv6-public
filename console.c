@@ -194,7 +194,7 @@ extern void killProc(void);
 void
 consoleintr(int (*getc)(void))
 {
-  int c, doprocdump = 0, doPrintHello = 0;
+  int c, doprocdump = 0, doKillProc = 0;
 
   acquire(&cons.lock);
   while((c = getc()) >= 0){
@@ -203,8 +203,8 @@ consoleintr(int (*getc)(void))
       // procdump() locks cons.lock indirectly; invoke later
       doprocdump = 1;
       break;
-    case C('C'):  // Process listing.
-      doPrintHello = 1;
+    case C('C'):  
+      doKillProc = 1;
       break;
     case C('U'):  // Kill line.
       while(input.e != input.w &&
@@ -236,10 +236,9 @@ consoleintr(int (*getc)(void))
   if(doprocdump) {
     procdump();  // now call procdump() wo. cons.lock held
   }
-  if(doPrintHello){
-    printHello(); 
+  if(doKillProc){
+    killProc();
   }
-  
 }
 
 int

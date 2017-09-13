@@ -558,9 +558,13 @@ procdump(void)
 }
 
 void
-printHello(void)
+killProc(void)
 {
-  cprintf("Hello world desde el console");
+  struct proc *p = myproc(); //The process in execution
+  if(p){ //If there's really a process running 
+    kill(p->pid); //Kill the process
+  }
+  //If there's no process running, does nothing
 }
 
 
