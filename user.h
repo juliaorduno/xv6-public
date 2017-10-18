@@ -29,6 +29,9 @@ int set_priority(int);
 int shmem(int);
 char* shmat(int);
 int shdemat(int);
+int getppid(void);
+int signal(int, sighandler_t);
+int killsignal(int pid, int signum);
 
 // ulib.c
 int stat(char*, struct stat*);
