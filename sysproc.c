@@ -132,9 +132,11 @@ sys_signal(void)
   if(argint(1, &function)<0)
       return -1;
 
+  //Verificar que esté dentro del array de signals
   if(signum > 4 || signum < 1)
     return -1;
   
+  //Regresar el valor de la función
   int value = (int)myproc()->signals[signum];
   myproc()->signals[signum] = (sighandler_t)function;
   return value;
